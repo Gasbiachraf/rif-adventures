@@ -1,0 +1,124 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-abyss: #0b2a3c;
+  --color-deep: #10405a;
+  --color-sea: #1d6f8c;
+  --color-lagoon: #5fbfc6;
+  --color-foam: #f6f1e7;
+  --color-shell: #fbf8f2;
+  --color-sand: #e8dcc5;
+  --color-coral: #e4603f;
+  --color-coral-dark: #c24a2c;
+  --color-ink: #13212b;
+  --color-mist: #55656f;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
+  --font-arabic: 'Noto Kufi Arabic', 'Manrope', system-ui, sans-serif;
+
+  --animate-rise: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+  body {
+    @apply bg-shell font-sans text-ink antialiased;
+  }
+  [dir='rtl'] body,
+  [dir='rtl'] .font-display {
+    font-family: var(--font-arabic);
+  }
+  [dir='rtl'] .font-display {
+    letter-spacing: 0;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-coral;
+  }
+  input[type='date']::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.6;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .eyebrow {
+    @apply text-xs font-bold tracking-[0.18em] text-sea uppercase;
+  }
+  [dir='rtl'] .eyebrow {
+    @apply tracking-normal;
+  }
+  .btn-coral,
+  .btn-light,
+  .btn-ghost,
+  .btn-wa {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-bold transition duration-200 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-coral {
+    @apply bg-coral text-white shadow-lg shadow-coral/25 hover:bg-coral-dark;
+  }
+  .btn-light {
+    @apply bg-white/95 text-abyss hover:bg-white;
+  }
+  .btn-ghost {
+    @apply border border-current/25 hover:border-current/60;
+  }
+  .btn-wa {
+    @apply bg-[#1a8f49] text-white hover:bg-[#157a3d];
+  }
+  .field-label {
+    @apply mb-1.5 block text-sm font-semibold text-ink;
+  }
+  .field {
+    @apply block min-h-12 w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-base text-ink transition placeholder:text-mist/70 focus:border-sea focus:ring-4 focus:ring-sea/15 focus:outline-none aria-invalid:border-coral aria-invalid:ring-coral/15;
+  }
+  .field-error {
+    @apply mt-1.5 text-sm font-medium text-coral-dark;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
